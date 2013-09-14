@@ -16,16 +16,27 @@
 #
 import cgi
 import datetime
-import webapp2
+
+import os
+import urllib
 
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
+import jinja2
+import webapp2
+
+
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'])
+
 
 class MainPage(webapp2.RequestHandler):
-  def get(self):
-    self.response.out.write('hello world')
-
+    def get(self):
+        template_values = {'title':'city-widgets'}
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render(template_values))
 
 
 app = webapp2.WSGIApplication([
