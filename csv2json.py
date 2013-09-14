@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 
+import os
 import csv
 import json
+import sys
 
 def get_year_indices(line):
     cells = line.strip().split(";")
@@ -41,7 +43,7 @@ def csv2json(path):
         if line_count < 5:
             continue
         data = line.strip().split(';')
-        subject = data[0]
+        subject = data[0][1:-1]
         months_data = data[1:]
         months_data_int = map(lambda x: int(float(x[1:-1])), months_data)
         months = get_months(months_data_int)
@@ -49,6 +51,12 @@ def csv2json(path):
     return json.dumps(res, ensure_ascii=False)
 
 def get_json():
-    return csv2json('data/data-36232-full.csv')
+    path = os.path.join(os.path.dirname(__file__), 'data/data-36232-full.csv')
+    return csv2json(path)
 
-#print get_json()
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print "usage: " + sys.argv[0] + " <csv file>"
+        exit(1)
+    path = sys.argv[1]
+    print csv2json(path)

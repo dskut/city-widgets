@@ -26,6 +26,8 @@ from google.appengine.api import users
 import jinja2
 import webapp2
 
+import csv2json
+
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -38,7 +40,12 @@ class MainPage(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render(template_values))
 
+class DataPage(webapp2.RequestHandler):
+    def get(self):
+        self.response.write(csv2json.get_json())
+
 
 app = webapp2.WSGIApplication([
   ('/', MainPage),
+  ('/get-data', DataPage),
 ], debug=True)
