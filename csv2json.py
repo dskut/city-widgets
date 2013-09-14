@@ -28,10 +28,10 @@ def get_months(data):
             res[i] -= data[i-1]
     return res
 
-def parse_csv(path):
+def csv2json(path):
     f = open(path)
     line_count = 0
-    res = []
+    res = {}
     for line in f:
         line_count += 1
         if line_count == 3:
@@ -45,8 +45,10 @@ def parse_csv(path):
         months_data = data[1:]
         months_data_int = map(lambda x: int(float(x[1:-1])), months_data)
         months = get_months(months_data_int)
-        res.append(months)
-    return res
+        res[subject] = months
+    return json.dumps(res, ensure_ascii=False)
 
-data = parse_csv('data/data-36232-full.csv')
-print data
+def get_json():
+    return csv2json('data/data-36232-full.csv')
+
+#print get_json()
