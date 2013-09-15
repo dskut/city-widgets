@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title></title>
+
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection" />
+
+	<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+
+	<script src="http://api-maps.yandex.ru/2.0/?load=package.standard,package.traffic&lang=ru-RU" type="text/javascript"></script>
+	<script type="text/javascript">
+
+		var myMap;
+		var archiveProvider;
+		var timestamp;
+
+		var timefrom = 2*24*60*60 + 10*60*60;
+		var timeto = 2*24*60*60 + 16*60*60;
+		
+
+		function getTimeText(timenum){
+
+			day = parseInt(timenum / 86400);
+
+			switch(day){
+				case 0:
+					dayText = "Понедельник";
+					break;
+				case 1:
+					dayText = "Вторник";
+					break;
+				case 2:
+					dayText = "Среда";
+					break;
+				case 3:
+					dayText = "Четверг";
+					break;
+				case 4:
+					dayText = "Пятница";
+					break;
+				case 5:
+					dayText = "Суббота";
+					break;
+				case 6:
+					dayText = "Воскресенье";
+					break;
+			}
+
+			
+			daySec = day * 86400;
+
+			hours = parseInt((timenum - daySec) / 3600);
+
+			if(hours < 10) hours = "0" + hours;
+
+			min = parseInt((timenum - daySec - (hours * 3600)) / 60);
+
+			if(min < 10) min = "0" + min;
+
+			return hours + ":" + min + " - " + dayText;
+
+		}
+
+		function setMapTime(timenow) {
+
+
+			day = parseInt(timenow / 86400);
+
+			switch(day){
+				case 0:
+					dayText = "mon";
+					break;
+				case 1:
+					dayText = "tue";
+					break;
+				case 2:
+					dayText = "wed";
+					break;
+				case 3:
+					dayText = "thu";
+					break;
+				case 4:
+					dayText = "fri";
+					break;
+				case 5:
+					dayText = "sat";
+					break;
+				case 6:
+					dayText = "sun";
+					break;
+			}
+
+			
+			daySec = day * 86400;
+
+			var hours_ = parseInt((timenow - daySec) / 3600);
+
+			var min_ = parseInt((timenow - daySec - (hours * 3600)) / 60);
+
+			console.log(timenow + " " + dayText + " " + hours_ + " " + min_);
+
+			archiveProvider.setTime({
+					dayOfWeek: dayText,
+					hours: hours_,
+					minutes: min_
+				});
+
+    		$(".panel_time").html(getTimeText(timenow));
+		}
+
+		// Дождёмся загрузки API и готовности DOM.
+
+		function init () {
+		    // Создание экземпляра карты и его привязка к контейнеру с
+		    // заданным id ("map").
+		    var myMap = new ymaps.Map('map', {
+        		// При инициализации карты обязательно нужно указать
+		        // её центр и коэффициент масштабирования.
+		        center:[55.751912, 37.617246], // Москва
+		        zoom:12
+			});
+
+			timestamp = timefrom;
+
+			archiveProvider = new ymaps.traffic.provider.Archive({
+        		// Запретим при первом открытии выставлять время, близкое к текущему
+        		showCurrentTimeFirst: false
+    		}, {
+       		// Зададим начальное время самостоятельно.
+        		timestamp: timestamp
+    		});
+
+    		nowTime = archiveProvider.state.get("timestamp");
+
+			archiveProvider.setMap(myMap);
+
+			$(".panel_time").html(getTimeText(nowTime));
+
+			$(".panel_scroll_labelfrom").html(getTimeText(timefrom));
+			$(".panel_scroll_labelto").html(getTimeText(timeto));
+
+		}
+
+
+		ymaps.ready(init);
+
+		$(document).ready(function(){
+
+			$(".panel_play").click(function(){
+
+				var thisButton = $(this);
+
+				if(thisButton.hasClass("play")){
+
+					thisButton.removeClass("play");
+
+					clearInterval(timerId);
+
+
+				} else {
+
+					thisButton.addClass("play");
+
+					timerId = setInterval(function(){
+
+						timestamp = timestamp + 15*60;
+
+						if(timestamp <= timeto){
+
+							setMapTime(timestamp);
+
+						} else {
+
+							clearInterval(timerId);
+
+						};
+
+					},2000);
+
+				}
+
+			});
+
+		});	
+
+	</script>
+
+</head>
+<body>
+
+	<div class="panel_wrapper">
+		<div class="panel">
+			<div class="panel_play"></div>
+			<div class="panel_time"></div>
+			<div class="panel_scrollwrapper">
+				<div class="panel_scroll">
+					<div class="panel_scroll_line"></div>
+					<div class="panel_scroll_drag"><img alt="" src="images/drag.png"></div>
+					<div class="panel_scroll_labelfrom">17:45 - Среда</div>
+					<div class="panel_scroll_labelto">20.00 - Пятница</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="map"></div>
+
+</body>
+</html>

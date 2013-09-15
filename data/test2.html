@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Data widjet</title>
+
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="/data/skor.js"></script>
+  <script type="text/javascript">
+  </script>
+  <script type="text/javascript">
+    google.load('visualization', '1', {packages: ['motionchart']});
+
+    var motionchart;
+
+    function drawVisualization() {
+      var data = new google.visualization.DataTable();
+      console.log(data1);
+
+      for (i = 0; i < data1.cols.length; ++i) {        
+        data.addColumn(data1.cols[i][0],data1.cols[i][1]);        
+      }    
+
+
+      data.addRows(data1.rows);
+    
+      motionchart = new google.visualization.MotionChart(document.getElementById('visualization'));
+      motionchart.draw(data,{width:800,height:400}); 
+    }
+    
+   google.setOnLoadCallback(drawVisualization);
+
+
+   function debug1()
+   {
+     console.log('debug1');
+     var state=motionchart.getState();
+     console.log(state);
+   }
+  </script>
+
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<p>Выезды скорой</p>
+<div id="visualization" style="width: 800px; height: 280px;"></div>
+<button type="button" onclick="debug1();">Click Me!</button></body>
+</html>
+​

@@ -1,0 +1,128 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 12px/18px Arial, Tahoma, Verdana, sans-serif;
+}
+a {
+	color: blue;
+	outline: none;
+	text-decoration: underline;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	margin: 0 0 18px
+}
+img {
+	border: none;
+}
+input {
+	vertical-align: middle;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	background: #707070;
+}
+
+#map {
+	width: 300px;
+	height: 300px;
+	z-index: 100;
+	margin: 150px auto 50px;
+}
+
+.panel_wrapper {
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 20px;
+	z-index: 200;
+}
+
+.panel {
+	background: #FFFFFF;
+    border-radius: 15px 15px 15px 15px;
+    height: 50px;
+    margin: 0 50px;
+    opacity: 0.7;
+    position: relative;
+}
+
+div.panel div.play {
+	background: url("images/pause.png");
+	background-size: 30px 30px;
+}
+
+.panel_play{
+	display: inline-block;
+	margin: 10px 0 0 20px;
+	cursor: pointer;
+	background: url("images/play.png");
+	background-size: 30px 30px;
+	width: 30px;
+	height: 30px;
+	position: relative;
+	z-index: 250;
+}
+
+.panel_play img {
+	height: 30px;
+}
+
+.panel_time{
+	display: inline-block;
+	font-size: 18px;
+    margin: 0 0 0 15px;
+    position: relative;
+    top: -8px;
+    width: 180px;
+}
+
+.panel_scrollwrapper{
+	position: absolute;
+	top:25px;
+	left: 0;
+	width: 100%;
+}
+
+.panel_scroll {
+    margin: 0 50px 0 270px;
+    position: relative;
+}
+
+.panel_scroll_line {
+	width: 100%;
+	height: 3px;
+	background: #000000;
+}
+
+.panel_scroll_drag {
+	position: absolute;
+	top: -20px;
+	left: -9px;
+	display:none;
+}
+
+.panel_scroll_drag img {
+	width: 20px
+}
+
+.panel_scroll_labelfrom,
+.panel_scroll_labelto {
+	font-size: 10px;
+}
+
+.panel_scroll_labelfrom {
+    position: absolute;
+    left: -40px;
+}
+
+.panel_scroll_labelto {
+    position: absolute;
+    right: -40px;
+}

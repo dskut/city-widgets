@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Twitter Data widjet</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+  function searchTweets() {
+        var url='http://search.twitter.com/search.json?callback=?&q=love';
+        $.getJSON(url,function(json){
+
+        console.log(json);
+
+
+        });
+    }
+
+   function debug1()
+   {
+     console.log('debug1');
+ searchTweets();   }
+  </script>
+
+</head>
+<p>Twitter</p>
+<button type="button" onclick="debug1();">Click Me!</button></body>
+</html>
+​
