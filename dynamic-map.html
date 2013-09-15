@@ -5,8 +5,8 @@
 <head>
     <title>Динамика ДТП</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.geoObjects&lang=ru-RU" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
     <script src="/data/data.json"></script>
 
 <script type="text/javascript">
@@ -24,7 +24,6 @@ function init() {
     var counter = 0;
 
     var parsedRegions = JSON.parse(regionsJson);
-    console.log(parsedRegions);
     //var regions = {'Москва': [200, 30, 40], 'Нижний Новгород': [50, 30, 10], 'Якутск': [10, 15, 5]};
     //console.log(regions);
     var regions = parsedRegions;
@@ -34,48 +33,54 @@ function init() {
     function drawMap(statNumber) {
         regionCollection.removeAll();
         myMap.geoObjects.add(regionCollection);
-        for (var region in regions) {
-            (function () {
-                var stats = regions[region];
-                var firstStat = stats[statNumber];
-                var radius = 500*firstStat;
-                ymaps.geocode(region, { results: 1 }).then(function (res) {
-                    var geoObject = res.geoObjects.get(0);
-                    // Создаем круг.
-                    var myCircle = new ymaps.Circle([
-                        // Координаты центра круга.
-                        //[55.76, 37.60],
-                        geoObject.geometry.getCoordinates(),
-                        // Радиус круга в метрах.
-                        radius
-                    ], {
-                        // Описываем свойства круга.
-                        // Содержимое балуна.
-                        //balloonContent: "Радиус круга - 10 км",
-                        // Содержимое хинта.
-                        //hintContent: "Подвинь меня"
-                    }, {
-                        // Задаем опции круга.
-                        // Включаем возможность перетаскивания круга.
-                        draggable: true,
-                        // Цвет заливки.
-                        // Последний байт (77) определяет прозрачность.
-                        // Прозрачность заливки также можно задать используя опцию "fillOpacity".
-                        fillColor: "#DB709377",
-                        // Цвет обводки.
-                        strokeColor: "#990066",
-                        // Прозрачность обводки.
-                        //strokeOpacity: 0.8,
-                        // Ширина обводки в пикселях.
-                        strokeWidth: 1
+        (function () {
+            var circles = [];
+            for (var region in regions) {
+                (function () {
+                    var stats = regions[region];
+                    var firstStat = stats[statNumber];
+                    var radius = 500*firstStat;
+                    ymaps.geocode(region, { results: 1 }).then(function (res) {
+                        var geoObject = res.geoObjects.get(0);
+                        // Создаем круг.
+                        var myCircle = new ymaps.Circle([
+                            // Координаты центра круга.
+                            //[55.76, 37.60],
+                            geoObject.geometry.getCoordinates(),
+                            // Радиус круга в метрах.
+                            radius
+                        ], {
+                            // Описываем свойства круга.
+                            // Содержимое балуна.
+                            //balloonContent: "Радиус круга - 10 км",
+                            // Содержимое хинта.
+                            //hintContent: "Подвинь меня"
+                        }, {
+                            // Задаем опции круга.
+                            // Включаем возможность перетаскивания круга.
+                            draggable: true,
+                            // Цвет заливки.
+                            // Последний байт (77) определяет прозрачность.
+                            // Прозрачность заливки также можно задать используя опцию "fillOpacity".
+                            fillColor: "#DB709377",
+                            // Цвет обводки.
+                            strokeColor: "#990066",
+                            // Прозрачность обводки.
+                            //strokeOpacity: 0.8,
+                            // Ширина обводки в пикселях.
+                            strokeWidth: 1
+                        });
+
+                        circles.push(myCircle);
+                        if (circles.length == Object.keys(regions).length) {
+                            for (var circle in circles) {
+                                regionCollection.add(circles[circle]);
+                            }
+                        }
                     });
-
-                    // Добавляем круг на карту.
-                    regionCollection.add(myCircle);
-                });
-
-            })();
-        }
+                })();
+            }
+        })();
     }
 
     drawMap(counter);
