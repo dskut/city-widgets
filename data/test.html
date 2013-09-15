@@ -15,6 +15,8 @@
 
     var motionchart;
 
+    var hack1=0;
+
     function drawVisualization() {
       var data = new google.visualization.DataTable();
       console.log(data1);
@@ -42,26 +44,33 @@ options['height']= 280;
      console.log('debug1');
      var state=motionchart.getState();
      console.log(state);
+     //console.log(myMap.options.geoObjects);
+     //console.log(data1.rows);
+     for(i=0;i<PM.length;i++){
+      PM[i].options.set("preset","twirl#redStretchyIcon");
+      PM[i].properties.set("iconContent",Math.floor(Math.random()*10+1) );
+     }
+      hack1++;
    }
-  </script>
 
-<script type="text/javascript">
-
+var myMap;
+var PM=[0,0,0];
 ymaps.ready(init);
 
 function init() {
       var last_t=0;
 
-	var myMap = new ymaps.Map('map', {
+	myMap = new ymaps.Map('map', {
             center: [55.734046, 37.588628],
             zoom: 3,
             behaviors: ['default', 'scrollZoom']
         });
 
       for (i = 0; i < data1.titles.length; ++i) {        
-
+(function(i){
     ymaps.geocode(data1.titles[i], { results: 1 }).then(function (res) {
         var firstGeoObject = res.geoObjects.get(0);
+        console.log('geo',firstGeoObject.properties._T.metaDataProperty);
         console.log(firstGeoObject.geometry.getCoordinates());
 	myPlacemark1 = new ymaps.Placemark(firstGeoObject.geometry.getCoordinates(), {
             //iconContent: i,
@@ -71,31 +80,13 @@ function init() {
             preset: 'twirl#violetIcon'
         }),
          myMap.geoObjects.add(myPlacemark1);
+         PM[i]=(myPlacemark1);
        }, function (err) {
         console.log(err.message);
     });
+})(i);
+     //PMs.push(myPlacemark1);
    }
-/*
-    function attachReverseGeocode(myMap) {
-        myMap.events.add('click', function (e) {
-            var coords = e.get('coordPosition');
-
-            ymaps.geocode(coords).then(function (res) {
-                var names = [];
-                res.geoObjects.each(function (obj) {
-                    names.push(obj.properties.get('name'));
-                });
-                myMap.geoObjects.add(new ymaps.Placemark(coords, {
-                    iconContent:names[0],
-                    balloonContent:names.reverse().join(', ')
-                }, {
-                    preset:'twirl#redStretchyIcon',
-                    balloonMaxWidth:'250'
-                }));
-            });
-        });
-    }
-*/
 }
 </script>
 </script>
