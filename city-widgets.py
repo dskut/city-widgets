@@ -49,6 +49,7 @@ class BootstrapPage(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('bootstrap.html')
         self.response.write(template.render({}))
 
+print "a"
 app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/get-data', DataPage),

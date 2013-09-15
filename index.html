@@ -8,36 +8,8 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Hello {{ title }}</h1>
-<div id="text1"></div>
-<button id="button1" type="button" onclick="play1();">play</button>
-
-<script src="/js/mskfx.js"></script>
-<script>
-var fx_counter = 0;
-var fx_limit = 5;
-var fx1 = new mskfx();
-fx1.cb = function(c){
-  fx_counter=fx_counter+1;
-  console.log("counter",fx_counter);
-  $("#text1").text(fx_counter);
-  if (fx_counter>=fx_limit){c.stop=true;$("#button1").text('play');fx_counter = 0;}
-};
-
-function play1(){
-console.log("play1",fx1);
-if(fx1.stop){
-// start
-fx1.stop=false;fx1.run();
-$("#button1").text('stop');
-}
-else{
-// stop
-fx1.stop=true;
-$("#button1").text('play');
-}
-
-};
-</script>
+<h1>Data Widjets Experiments</h1>
+<a href="/data/test.html">experimet1</a>
+<a href="/data/test2.html">experimet2</a>
 </body>
 </html>

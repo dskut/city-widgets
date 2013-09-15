@@ -9,13 +9,11 @@
 
 function mskfx(cb){
 this.stop = true;  
-this.dbg = true;
 this.t = 1;
 var that=this;
 
 
 this.run = function () {
-//console.log("run",that);
 if(that.stop){return;}
 if(that.cb){that.cb(that);}
 var c = that.counter;
