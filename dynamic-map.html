@@ -28,18 +28,21 @@ function init() {
     //console.log(regions);
     var regions = parsedRegions;
     //var statLen = regions['Москва'].length;
-    var statLen = 10;
+    var statLen = 30; // FIXME
     var regionCollection = new ymaps.GeoObjectCollection({}, {});
+    myMap.geoObjects.add(regionCollection);
+    var circles2stats = {};
+
     function drawMap(statNumber) {
-        regionCollection.removeAll();
-        myMap.geoObjects.add(regionCollection);
+        //regionCollection.removeAll();
+        //myMap.geoObjects.add(regionCollection);
         (function () {
             var circles = [];
             for (var region in regions) {
                 (function () {
                     var stats = regions[region];
-                    var firstStat = stats[statNumber];
-                    var radius = 500*firstStat;
+                    var stat = stats[statNumber];
+                    var radius = 500*stat;
                     ymaps.geocode(region, { results: 1 }).then(function (res) {
                         var geoObject = res.geoObjects.get(0);
                         // Создаем круг.
@@ -71,12 +74,18 @@ function init() {
                             strokeWidth: 1
                         });
 
-                        circles.push(myCircle);
-                        if (circles.length == Object.keys(regions).length) {
-                            for (var circle in circles) {
-                                regionCollection.add(circles[circle]);
-                            }
-                        }
+                        regionCollection.add(myCircle);
+                        circles2stats[myCircle.geometry.getCoordinates()] = stats;
+                        console.log(stats);
+                        console.log(circles2stats);
+                        
+
+                        //circles.push(myCircle);
+                        //if (circles.length == Object.keys(regions).length) {
+                        //    for (var circle in circles) {
+                        //        regionCollection.add(circles[circle]);
+                        //    }
+                        //}
                     });
                 })();
             }
@@ -91,7 +100,19 @@ function init() {
         } else {
             ++counter;
         }
-        drawMap(counter);
+        //drawMap(counter);
+        for (var iter = regionCollection.getIterator();;) {
+            var circle = iter.getNext();
+            if (circle) {
+                var stats = circles2stats[circle.geometry.getCoordinates()];
+                console.log(stats);
+                var stat = stats[counter]; 
+                console.log(stat);
+                circle.geometry.setRadius(stat * 500);
+            } else {
+                break;
+            }
+        }
     };
 
 }
