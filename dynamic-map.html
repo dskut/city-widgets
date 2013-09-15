@@ -6,6 +6,8 @@
     <title>Динамика ДТП</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.geoObjects&lang=ru-RU" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/data/data.json"></script>
 
 <script type="text/javascript">
 ymaps.ready(init);
@@ -21,8 +23,13 @@ function init() {
 
     var counter = 0;
 
-    var regions = {'Москва': [200, 30, 40], 'Нижний Новгород': [50, 30, 10], 'Якутск': [10, 15, 5]};
-    var statLen = regions['Москва'].length;
+    var parsedRegions = JSON.parse(regionsJson);
+    console.log(parsedRegions);
+    //var regions = {'Москва': [200, 30, 40], 'Нижний Новгород': [50, 30, 10], 'Якутск': [10, 15, 5]};
+    //console.log(regions);
+    var regions = parsedRegions;
+    //var statLen = regions['Москва'].length;
+    var statLen = 10;
     var regionCollection = new ymaps.GeoObjectCollection({}, {});
     function drawMap(statNumber) {
         regionCollection.removeAll();
@@ -31,7 +38,7 @@ function init() {
             (function () {
                 var stats = regions[region];
                 var firstStat = stats[statNumber];
-                var radius = 10000*firstStat;
+                var radius = 1000*firstStat;
                 ymaps.geocode(region, { results: 1 }).then(function (res) {
                     var geoObject = res.geoObjects.get(0);
                     // Создаем круг.
