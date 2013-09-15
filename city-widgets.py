@@ -44,8 +44,13 @@ class DataPage(webapp2.RequestHandler):
     def get(self):
         self.response.write(csv2json.get_json())
 
+class BootstrapPage(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('bootstrap.html')
+        self.response.write(template.render({}))
 
 app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/get-data', DataPage),
+  ('/bootstrap', BootstrapPage),
 ], debug=True)
