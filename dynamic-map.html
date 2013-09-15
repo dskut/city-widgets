@@ -38,7 +38,7 @@ function init() {
             (function () {
                 var stats = regions[region];
                 var firstStat = stats[statNumber];
-                var radius = 1000*firstStat;
+                var radius = 500*firstStat;
                 ymaps.geocode(region, { results: 1 }).then(function (res) {
                     var geoObject = res.geoObjects.get(0);
                     // Создаем круг.
