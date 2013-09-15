@@ -3,10 +3,11 @@
 <html>
 
 <head>
-    <title>Динамика ДТП</title>
+    <title>City Widgets | Accident victims</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="//api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
     <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <link href="/css/bootstrap.css" rel="stylesheet">
     <script src="/data/data.json"></script>
 
 <script type="text/javascript">
@@ -121,9 +122,12 @@ function init() {
 </head>
 
 <body>
-<p>Количество лиц получивщих ранения в ДТП</p>
+    <span>Количество лиц получивших ранения в ДТП</span>
+    <br/>
+    <br/>
     <div id="map" style="width:800px; height:500px"></div>
-    <input type="button" id="nextButton" value="Next">
+    <br/>
+    <input type="button" id="nextButton" value="Next" class="btn btn-primary">
 </body>
 
 </html>

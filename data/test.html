@@ -6,6 +6,7 @@
 
 <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
 
+  <link href="/css/bootstrap.css" rel="stylesheet">
   <script type="text/javascript" src="//www.google.com/jsapi"></script>
   <script type="text/javascript" src="/data/dtp.js"></script>
   <script type="text/javascript">
@@ -92,9 +93,13 @@ function init() {
 </script>
 </head>
 <body style="font-family: Arial;border: 0 none;">
-<p>Смертность населения в ДТП в расчете на 100 тыс. человек населения</p>
-<div id="map" style="width: 800px; height: 300px"></div>
-<div id="visualization" style="width: 800px; height: 280px;"></div>
-<button type="button" onclick="debug1();">Click Me!</button></body>
+    <p>Смертность населения в ДТП в расчете на 100 тыс. человек населения</p>
+    <div id="map" style="width: 800px; height: 300px"></div>
+    <div id="visualization" style="width: 800px; height: 280px;"></div>
+    <br/>
+    <button type="button" class="btn btn-primary"  onclick="debug1();">Start</button>
+        <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
 </html>
 ​
