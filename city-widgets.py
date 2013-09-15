@@ -49,9 +49,16 @@ class BootstrapPage(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('bootstrap.html')
         self.response.write(template.render({}))
 
+class DynamicMapPage(webapp2.RequestHandler):
+    def get(self):
+        template_values = {}
+        template = JINJA_ENVIRONMENT.get_template('dynamic-map.html')
+        self.response.write(template.render(template_values))
+
 print "a"
 app = webapp2.WSGIApplication([
   ('/', MainPage),
   ('/get-data', DataPage),
   ('/bootstrap', BootstrapPage),
+  ('/dynamic-map', DynamicMapPage),
 ], debug=True)
