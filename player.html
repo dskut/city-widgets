@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.png">
 
-    <title>City Widgets | Home</title>
+    <title>City Widgets | Data Player</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.css" rel="stylesheet">
@@ -36,7 +36,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-              <li><a href="/player">Data Player</a></li>
+              <li class="active"><a href="/player">Data Player</a></li>
               <li><a href="/traffic">Traffic</a></li>
               <li><a href="/victims">Accident Victims</a></li>
           </ul>
@@ -47,8 +47,10 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Welcome to City Widgets!</h1>
-        <!--<p class="lead">Here we provide some useful widgets for city administration and information.<br>Check one of them below!</p>-->
+        <iframe src="/data/test.html" width="840" height="680"></iframe>
+        <textarea style="width:800px;">
+            <iframe src='http://city-widgets.appspot.com/data/test.html' width='840' height='680'></iframe>
+        </textarea>
       </div>
 
     </div><!-- /.container -->

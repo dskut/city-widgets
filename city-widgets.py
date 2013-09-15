@@ -51,9 +51,23 @@ class BootstrapPage(webapp2.RequestHandler):
 
 class DynamicMapPage(webapp2.RequestHandler):
     def get(self):
-        template_values = {}
         template = JINJA_ENVIRONMENT.get_template('dynamic-map.html')
-        self.response.write(template.render(template_values))
+        self.response.write(template.render({}))
+
+class PlayerPage(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('player.html')
+        self.response.write(template.render({}))
+
+class TrafficPage(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('traffic.html')
+        self.response.write(template.render({}))
+
+class VictimsPage(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('victims.html')
+        self.response.write(template.render({}))
 
 print "a"
 app = webapp2.WSGIApplication([
@@ -61,4 +75,7 @@ app = webapp2.WSGIApplication([
   ('/get-data', DataPage),
   ('/bootstrap', BootstrapPage),
   ('/dynamic-map', DynamicMapPage),
+  ('/player', PlayerPage),
+  ('/traffic', TrafficPage),
+  ('/victims', VictimsPage),
 ], debug=True)
