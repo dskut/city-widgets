@@ -8,6 +8,7 @@ import sys
 def get_year_indices(line):
     cells = line.strip().split(";")
     ind = 0
+    ind2010 = ind2011 = ind2012 = ind2013 = 0
     for cell in cells:
         if cell == '"2010"':
             ind2010 = ind
